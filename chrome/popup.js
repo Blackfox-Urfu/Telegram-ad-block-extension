@@ -11,13 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Элементы управления
     const enableAdClassification = document.getElementById('enableAdClassification');
     const adSettingsContainer = document.getElementById('adSettingsContainer');
-    const adAnalysisMode = document.getElementById('adAnalysisMode'); // <<< ИСПРАВЛЕНО: Добавлен этот элемент
+    const adAnalysisMode = document.getElementById('adAnalysisMode');
     const displayMode = document.getElementById('displayMode');
     const thresholdSlider = document.getElementById('thresholdSlider');
     const thresholdInput = document.getElementById('thresholdInput');
     const enableNsfwClassification = document.getElementById('enableNsfwClassification');
     const nsfwSettingsContainer = document.getElementById('nsfwSettingsContainer');
-    const nsfwDisplayModeSelect = document.getElementById('nsfwDisplayMode'); // <<< ИСПРАВЛЕНО: Переименовано для ясности
+    const nsfwDisplayModeSelect = document.getElementById('nsfwDisplayMode');
 
     function toggleSettingsVisibility() {
         if (adSettingsContainer) adSettingsContainer.style.display = enableAdClassification.checked ? 'block' : 'none';
@@ -25,20 +25,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadSettings() {
-        // Указываем ключи и значения по умолчанию. Это более надежный способ.
+        // Указываем ключи и значения по умолчанию.
         chrome.storage.local.get({
             excludedChannels: [],
             enableAdClassification: true,
-            adAnalysisMode: 'multimodal', // <<< ИСПРАВЛЕНО: Добавлена загрузка
+            adAnalysisMode: 'text_only', // <--- ИЗМЕНЕНО ЗНАЧЕНИЕ ПО УМОЛЧАНИЮ
             displayMode: 'highlight',
             threshold: 0.5,
-            enableNsfwClassification: true,
-            nsfwDisplayMode: 'blur' // <<< ИСПРАВЛЕНО: Ключ теперь совпадает с HTML
+            enableNsfwClassification: false, // <--- ИЗМЕНЕНО ЗНАЧЕНИЕ ПО УМОЛЧАНИЮ
+            nsfwDisplayMode: 'blur'
         }, (data) => {
             updateChannelList(data.excludedChannels);
             
             enableAdClassification.checked = data.enableAdClassification;
-            adAnalysisMode.value = data.adAnalysisMode; // <<< ИСПРАВЛЕНО: Добавлена загрузка
+            adAnalysisMode.value = data.adAnalysisMode;
             displayMode.value = data.displayMode;
             
             const threshold = data.threshold;
@@ -80,11 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- ИСПРАВЛЕНО: Все слушатели событий теперь корректно сохраняют свои настройки ---
+    // Слушатели событий
     enableAdClassification.addEventListener('change', () => { saveSettings({ enableAdClassification: enableAdClassification.checked }); toggleSettingsVisibility(); });
     enableNsfwClassification.addEventListener('change', () => { saveSettings({ enableNsfwClassification: enableNsfwClassification.checked }); toggleSettingsVisibility(); });
     
-    adAnalysisMode.addEventListener('change', () => saveSettings({ adAnalysisMode: adAnalysisMode.value })); // <<< ИСПРАВЛЕНО: Добавлен слушатель
+    adAnalysisMode.addEventListener('change', () => saveSettings({ adAnalysisMode: adAnalysisMode.value }));
     displayMode.addEventListener('change', () => saveSettings({ displayMode: displayMode.value }));
     nsfwDisplayModeSelect.addEventListener('change', () => saveSettings({ nsfwDisplayMode: nsfwDisplayModeSelect.value }));
 
