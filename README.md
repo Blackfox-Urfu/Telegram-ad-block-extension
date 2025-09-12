@@ -97,7 +97,6 @@ curl -X POST "https://your-server-address/api/classify_nsfw_image/" \
 
 # Пример использования API: Telegram Ad Block Extension
 *(Пока в стадии разработки)*
-https://github.com/user-attachments/assets/536b994c-7a62-416e-8c34-d2bf9b701bdb
 
 ## 📖 Описание расширения
 
