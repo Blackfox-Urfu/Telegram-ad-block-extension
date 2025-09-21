@@ -17,7 +17,8 @@
     - `text` (string, опционально): Текстовая часть сообщения.
     - `image` (file, опционально): Изображение для анализа.
 
-**Пример запроса (cURL):**```bash
+**Пример запроса (cURL):**
+```bash
 curl -X POST "https://your-server-address/api/classify_message/" \
 -F "text=Посмотрите на этот удивительный продукт!" \
 -F "image=@/path/to/your/image.jpg"
